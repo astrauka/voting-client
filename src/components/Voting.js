@@ -1,17 +1,17 @@
-import React from 'react';
+import React from 'react/addons';
+import Winner from './Winner';
+import Vote from './Vote';
 
 export default React.createClass({
-  getPair: function() {
-    return this.props.pair || [];
-  },
+  mixins: [React.addons.PureRenderMixin],
   render: function() {
+    const {winner} = this.props;
+
     return(
-      <div className='voting'>
-        {this.getPair().map(entry =>
-          <button key={entry} onClick={() => this.props.vote(entry)}>
-            <h1>{entry}</h1>
-          </button>
-        )}
+      <div>
+        {winner ?
+          <Winner ref='winner' winner={winner} /> :
+          <Vote {...this.props} />}
       </div>
     );
   }
