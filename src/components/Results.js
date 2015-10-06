@@ -1,15 +1,16 @@
 import React from 'react/addons';
 import {connect} from 'react-redux';
+import {List, Map} from 'immutable';
 
 import Winner from './Winner';
 
 export const Results = React.createClass({
   mixins: [React.addons.PureRenderMixin],
   getPair: function() {
-    return this.props.pair || [];
+    return this.props.pair || List();
   },
   getTally: function() {
-    return this.props.tally || {};
+    return this.props.tally || Map();
   },
   getVotes: function(entry) {
     return this.getTally().get(entry) || 0;
