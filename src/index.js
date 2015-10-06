@@ -1,9 +1,17 @@
 import React from 'react';
+import Router, {Route, DefaultRoute} from 'react-router';
+import App from './components/App';
 import Voting from './components/Voting';
+import Results from './components/Results';
 
-const pair = ['Trainspotting', '28 Days Later'];
+const routes = <Route handler={App}>
+  <DefaultRoute handler={Voting} />
+  <Route path='/results' handler={Results} />
+</Route>;
 
-React.render(
-  <Voting pair={pair} winner="Trainspotting" />,
-  document.getElementById('app')
-);
+Router.run(routes, (Root) => {
+  React.render(
+    <Root />,
+    document.getElementById('app')
+  );
+});
