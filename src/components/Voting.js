@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import {connect} from 'react-redux';
+import * as actionCreators from '../action_creators';
 import Winner from './Winner';
 import Vote from './Vote';
 
@@ -26,4 +27,4 @@ function mapStateToProps(state) {
   }
 };
 
-export const VotingContainer = connect(mapStateToProps)(Voting);
+export const VotingContainer = connect(mapStateToProps, actionCreators)(Voting);
