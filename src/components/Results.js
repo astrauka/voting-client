@@ -2,6 +2,7 @@ import React from 'react/addons';
 import {connect} from 'react-redux';
 import {List, Map} from 'immutable';
 
+import * as actionCreators from '../action_creators';
 import Winner from './Winner';
 
 export const Results = React.createClass({
@@ -37,9 +38,11 @@ export const Results = React.createClass({
           </div>
 
           <div className='management'>
-            <butotn ref='next'
+            <button ref='next'
                     className='next'
-                    onClick={this.props.next} />
+                    onClick={this.props.next}>
+              Next
+            </button>
           </div>
         </div>
     );
@@ -54,4 +57,4 @@ function mapStateToProps(state) {
   }
 };
 
-export const ResultsContainer = connect(mapStateToProps)(Results);
+export const ResultsContainer = connect(mapStateToProps, actionCreators)(Results);
