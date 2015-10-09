@@ -18,29 +18,22 @@ describe('reducer', () => {
     expect(reducer(initialState, action)).to.equal(receivedState);
   });
 
-  it('removes hasVoted on SET_STATE pair change', () => {
+  it('removes hasVoted on SET_STATE round change', () => {
     const initialState = fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
       },
       hasVoted: 'Trainspotting',
+      round: 1,
     });
 
-    const noPairChangeState = fromJS({
-      vote: {
-        pair: ['Trainspotting', '28 Days Later'],
-      }
-    });
+    const noPairChangeState = fromJS({round: 1});
     const noPairChangeAction = {type: 'SET_STATE', state: noPairChangeState};
     expect(reducer(initialState, noPairChangeAction)).to.equal(initialState);
 
-    const pairChangeState = fromJS({
-      vote: {
-        pair: ['Sunshine', 'Millionaire']
-      }
-    });
+    const pairChangeState = fromJS({round: 2});
     const pairChangeAction = {type: 'SET_STATE', state: pairChangeState};
-    expect(reducer(initialState, pairChangeAction)).to.equal(pairChangeState);
+    expect(reducer(initialState, pairChangeAction)).to.not.have.key('hasVoted');
   });
 
   it('handles VOTE by setting hasVoted', () => {

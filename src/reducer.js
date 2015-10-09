@@ -12,19 +12,18 @@ function vote(state, entry) {
   }
 }
 
-function resetHasVoted(state) {
-  const hasVoted = state.get('hasVoted');
-  if (currentPair(state).includes(hasVoted)) {
-    return state;
-  } else {
+function resetHasVoted(previousState, state) {
+  if (previousState.get('round') < state.get('round')) {
     return state.remove('hasVoted');
+  } else {
+    return state;
   }
 }
 
 export default function reducer(state = Map(), action) {
   switch (action.type) {
   case 'SET_STATE':
-    return resetHasVoted(state.merge(action.state));
+    return resetHasVoted(state, state.merge(action.state));
   case 'VOTE':
     return vote(state, action.entry);
   }
