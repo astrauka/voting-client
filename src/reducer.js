@@ -16,7 +16,7 @@ function vote(state, entry) {
 }
 
 function resetVote(state) {
-  if (state.getIn(['vote', 'round'], 0) < state.getIn(['myVote', 'round'], 0)) {
+  if (state.getIn(['vote', 'round'], 0) > state.getIn(['myVote', 'round'], 0)) {
     return state.remove('myVote');
   } else {
     return state;

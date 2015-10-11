@@ -1,6 +1,8 @@
 import React from 'react/addons';
 import {connect} from 'react-redux';
+
 import * as actionCreators from '../action_creators';
+import getClientId from '../client_id';
 import Winner from './Winner';
 import Vote from './Vote';
 
@@ -22,7 +24,7 @@ export const Voting = React.createClass({
 function mapStateToProps(state) {
   return {
     pair: state.getIn(['vote', 'pair']),
-    hasVoted: state.getIn(['myVote', 'entry']),
+    hasVoted: state.getIn(['vote', 'votes', getClientId()]),
     winner: state.get('winner'),
   }
 };
