@@ -53,4 +53,11 @@ describe('reducer', () => {
     const invalidEntryAction = {type: 'VOTE', entry: 'Sunrize'};
     expect(reducer(initialState, invalidEntryAction)).to.equal(initialState);
   });
+
+  it('handles SET_CLIENT_ID', () => {
+    const initialState = Map();
+    const clientId = '1234';
+    const action = {type: 'SET_CLIENT_ID', clientId};
+    expect(reducer(initialState, action)).to.equal(fromJS({clientId}));
+  });
 });
