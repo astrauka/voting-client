@@ -6,15 +6,18 @@ function currentPair(state) {
 
 function vote(state, entry) {
   if (currentPair(state).includes(entry)) {
-    return state.set('hasVoted', entry);
+    return state.set('myVote', Map({
+      round: state.getIn(['vote', 'round']),
+      entry
+    }));
   } else {
     return state;
   }
 }
 
-function resetHasVoted(previousState, state) {
-  if (previousState.get('round') < state.get('round')) {
-    return state.remove('hasVoted');
+function resetVote(state) {
+  if (state.getIn(['vote', 'round'], 0) < state.getIn(['myVote', 'round'], 0)) {
+    return state.remove('myVote');
   } else {
     return state;
   }
@@ -23,7 +26,7 @@ function resetHasVoted(previousState, state) {
 export default function reducer(state = Map(), action) {
   switch (action.type) {
   case 'SET_STATE':
-    return resetHasVoted(state, state.merge(action.state));
+    return resetVote(state.merge(action.state));
   case 'VOTE':
     return vote(state, action.entry);
   case 'SET_CLIENT_ID':

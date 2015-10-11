@@ -18,35 +18,44 @@ describe('reducer', () => {
     expect(reducer(initialState, action)).to.equal(receivedState);
   });
 
-  it('removes hasVoted on SET_STATE round change', () => {
+  it('removes myVote on SET_STATE round change', () => {
+    const pair = List.of('Trainspotting', '28 Days Later');
     const initialState = fromJS({
       vote: {
-        pair: ['Trainspotting', '28 Days Later'],
+        round: 1,
+        pair: pair,
       },
-      hasVoted: 'Trainspotting',
-      round: 1,
+      myVote: {
+        round: 1,
+        entry: 'Trainspotting',
+      },
     });
 
-    const noPairChangeState = fromJS({round: 1});
+    const noPairChangeState = fromJS({vote: {round: 1, pair: pair}});
     const noPairChangeAction = {type: 'SET_STATE', state: noPairChangeState};
     expect(reducer(initialState, noPairChangeAction)).to.equal(initialState);
 
-    const pairChangeState = fromJS({round: 2});
+    const pairChangeState = fromJS({vote: {round: 2, pair: pair}});
     const pairChangeAction = {type: 'SET_STATE', state: pairChangeState};
-    expect(reducer(initialState, pairChangeAction)).to.not.have.key('hasVoted');
+    expect(reducer(initialState, pairChangeAction)).to.not.have.key('myVote');
   });
 
-  it('handles VOTE by setting hasVoted', () => {
+  it('handles VOTE by setting myVote', () => {
+    const round = 2;
     const initialState = fromJS({
       vote: {
         pair: ['Trainspotting', '28 Days Later'],
-        tally: {Trainspotting: 2}
+        tally: {Trainspotting: 2},
+        round: round,
       }
     });
     const action = {type: 'VOTE', entry: 'Trainspotting'};
     expect(reducer(initialState, action)).to.equal(
       initialState.merge({
-        hasVoted: 'Trainspotting',
+        myVote: {
+          round: round,
+          entry: 'Trainspotting',
+        }
       })
     );
 
